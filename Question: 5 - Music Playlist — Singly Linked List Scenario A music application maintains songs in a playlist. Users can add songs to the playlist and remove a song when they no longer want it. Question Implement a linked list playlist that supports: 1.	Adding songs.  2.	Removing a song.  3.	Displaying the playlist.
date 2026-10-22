@@ -1,0 +1,42 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Collections;
+
+public class StudentMarks {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        ArrayList<Integer> marks = new ArrayList<>();
+
+        System.out.print("Enter number of students: ");
+        int n = sc.nextInt();
+
+        // Store marks
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter mark of student " + (i + 1) + ": ");
+            marks.add(sc.nextInt());
+        }
+
+        // Display marks
+        System.out.println("\nStudent Marks: " + marks);
+
+        if (marks.isEmpty()) {
+            System.out.println("No marks entered.");
+        } else {
+            // Find highest mark
+            int highest = Collections.max(marks);
+            System.out.println("Highest Mark: " + highest);
+
+            // Calculate average
+            int sum = 0;
+            for (int mark : marks) {
+                sum += mark;
+            }
+
+            double average = (double) sum / marks.size();
+            System.out.println("Average Mark: " + average);
+        }
+
+        sc.close();
+    }
+}

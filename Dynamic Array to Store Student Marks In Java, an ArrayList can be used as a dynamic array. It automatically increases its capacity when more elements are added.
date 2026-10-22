@@ -1,0 +1,56 @@
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class StudentMarks {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Create a dynamic array
+        ArrayList<Integer> marks = new ArrayList<>();
+
+        System.out.println("Enter student marks (-1 to stop):");
+
+        while (true) {
+            System.out.print("Enter mark: ");
+            int mark = sc.nextInt();
+
+            if (mark == -1) {
+                break;
+            }
+
+            if (mark < 0 || mark > 100) {
+                System.out.println("Invalid mark! Enter 0 to 100.");
+                continue;
+            }
+
+            // Add mark to the dynamic array
+            marks.add(mark);
+        }
+
+        // Display all marks
+        System.out.println("\nStudent Marks:");
+        for (int i = 0; i < marks.size(); i++) {
+            System.out.println("Student " + (i + 1) + ": "
+                    + marks.get(i));
+        }
+
+        // Calculate average
+        if (!marks.isEmpty()) {
+            int total = 0;
+
+            for (int mark : marks) {
+                total += mark;
+            }
+
+            double average = (double) total / marks.size();
+
+            System.out.println("Total Students: " + marks.size());
+            System.out.println("Average Marks: " + average);
+        } else {
+            System.out.println("No marks entered.");
+        }
+
+        sc.close();
+    }
+}

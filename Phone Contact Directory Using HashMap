@@ -1,0 +1,59 @@
+
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class PhoneContactDirectory {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        HashMap<String, String> contacts = new HashMap<>();
+
+        // Add contacts
+        contacts.put("Arun", "9876543210");
+        contacts.put("Priya", "9876501234");
+        contacts.put("Kumar", "9123456780");
+
+        System.out.println("1. Search Contact");
+        System.out.println("2. Update Phone Number");
+        System.out.print("Enter your choice: ");
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Enter contact name: ");
+        String name = sc.nextLine();
+
+        switch (choice) {
+            case 1:
+                if (contacts.containsKey(name)) {
+                    System.out.println("Name: " + name);
+                    System.out.println("Phone Number: "
+                            + contacts.get(name));
+                } else {
+                    System.out.println("Contact not found.");
+                }
+                break;
+
+            case 2:
+                if (contacts.containsKey(name)) {
+                    System.out.print("Enter new phone number: ");
+                    String number = sc.nextLine();
+
+                    contacts.put(name, number);
+
+                    System.out.println(
+                            "Phone number updated successfully.");
+                    System.out.println("Name: " + name);
+                    System.out.println("New Phone Number: "
+                            + contacts.get(name));
+                } else {
+                    System.out.println("Contact not found.");
+                }
+                break;
+
+            default:
+                System.out.println("Invalid choice.");
+        }
+
+        sc.close();
+    }
+}

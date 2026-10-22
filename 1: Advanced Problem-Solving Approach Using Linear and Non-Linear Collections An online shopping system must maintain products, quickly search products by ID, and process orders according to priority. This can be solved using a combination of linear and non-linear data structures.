@@ -1,0 +1,125 @@
+
+import java.util.*;
+
+class Product {
+    int id;
+    String name;
+    double price;
+    int stock;
+
+    Product(int id, String name, double price, int stock) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+    }
+
+    void display() {
+        System.out.println("ID: " + id + ", Name: " + name
+                + ", Price: " + price + ", Stock: " + stock);
+    }
+}
+
+class Order {
+    int orderId;
+    int productId;
+    int quantity;
+    int priority;
+
+    Order(int orderId, int productId, int quantity, int priority) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.priority = priority;
+    }
+}
+
+public class OnlineShoppingSystem {
+    public static void main(String[] args) {
+
+        // Linear collection: ArrayList
+        ArrayList<Product> products = new ArrayList<>();
+
+        // Non-linear collection: HashMap
+        HashMap<Integer, Product> productMap = new HashMap<>();
+
+        // Non-linear collection: PriorityQueue
+        // Lower priority number means higher priority
+        PriorityQueue<Order> orders = new PriorityQueue<>(
+            Comparator.comparingInt((Order o) -> o.priority)
+                      .thenComparingInt(o -> o.orderId)
+        );
+
+        // Add products
+        Product p1 = new Product(101, "Laptop", 50000, 10);
+        Product p2 = new Product(102, "Mobile", 20000, 5);
+        Product p3 = new Product(103, "Headphones", 1500, 20);
+
+        products.add(p1);
+        products.add(p2);
+        products.add(p3);
+
+        productMap.put(p1.id, p1);
+        productMap.put(p2.id, p2);
+        productMap.put(p3.id, p3);
+
+        // Display all products
+        System.out.println("=== Product List ===");
+        for (Product p : products) {
+            p.display();
+        }
+
+        // Search product by ID
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("\nEnter product ID to search: ");
+        int searchId = sc.nextInt();
+
+        Product found = productMap.get(searchId);
+
+        if (found != null) {
+            System.out.println("Product Found:");
+            found.display();
+        } else {
+            System.out.println("Product not found.");
+        }
+
+        // Add orders (priority 1 is highest)
+        orders.add(new Order(1, 101, 2, 2));
+        orders.add(new Order(2, 102, 1, 1));
+        orders.add(new Order(3, 103, 3, 3));
+
+        // Process orders by priority
+        System.out.println("\n=== Order Processing ===");
+
+        while (!orders.isEmpty()) {
+            Order order = orders.poll();
+            Product product = productMap.get(order.productId);
+
+            System.out.println("Processing Order ID: " + order.orderId);
+
+            if (product != null && product.stock >= order.quantity) {
+                product.stock -= order.quantity;
+
+                System.out.println("Product: " + product.name);
+                System.out.println("Quantity: " + order.quantity);
+                System.out.println("Priority: " + order.priority);
+                System.out.println("Order processed successfully.");
+            } else {
+                System.out.println("Order failed: Product unavailable "
+                        + "or insufficient stock.");
+            }
+
+            System.out.println();
+        }
+
+        // Display updated stock
+        System.out.println("=== Updated Inventory ===");
+        for (Product p : products) {
+            p.display();
+        }
+
+        sc.close();
+    }
+}
+
